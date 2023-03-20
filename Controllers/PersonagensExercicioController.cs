@@ -9,7 +9,6 @@ namespace RpgApi.Controllers
     [Route("[Controller]")]
     public class PersonagensExemploController : ControllerBase
     {
-
         private static List<Personagem> personagens = new List<Personagem>()
         {
             new Personagem() { Id = 1, Nome = "Frodo", PontosVida=100, Forca=17, Defesa=23, Inteligencia=33, Classe=ClasseEnum.Cavaleiro},
@@ -25,7 +24,7 @@ namespace RpgApi.Controllers
         [HttpGet("{nome}")]
         public IActionResult GetByNome (string nome)
         {
-            Personagem selecionado = personagens.FirstOrDefault(pe => pe.Nome == nome);
+            Personagem selecionado = personagens.FirstOrDefault(pe => pe.Nome == nome)!;
             if(selecionado == null) {
                 return NotFound("Personagem não encontrado");
             } else 
