@@ -33,5 +33,75 @@ namespace RpgApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> Get()
+        {
+            try
+            {
+                List<Personagem> lista = await _context.Personagens.ToListAsync();
+                return Ok(lista);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add(Personagem novoPersonagem)
+        {
+            try
+            {
+                if(novoPersonagem.PontosVida > 100) 
+                    throw new Exception("Pontos de vida não podem ser acima de 100.");
+
+                await _context.Personagens.AddAsync(novoPersonagem);
+                await _context.SaveChangesAsync();
+
+                return Ok("Personagem: " + novoPersonagem.Nome + " criado.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Update(Personagem novoPersonagem)
+        {
+            try
+            {
+                if(novoPersonagem.PontosVida > 100) 
+                    throw new Exception("Pontos de vida não podem ser acima de 100.");
+
+                _context.Personagens.Update(novoPersonagem);
+                int linhasAfetadas = await _context.SaveChangesAsync();
+
+                return Ok(linhasAfetadas);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            try
+            {
+                Personagem pRemover = await _context.Personagens
+                    .FirstOrDefaultAsync(p => p.Id == id);
+
+                _context.Personagens.Remove(pRemover);
+                int linhasAfetadas = await _context.SaveChangesAsync();
+                return Ok(linhasAfetadas);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }
