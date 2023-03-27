@@ -9,7 +9,7 @@ using System.Linq;
 namespace RpgApi.Controllers
 {
     [ApiController]
-    [Route("Controller")]
+    [Route("[Controller]")]
     public class PersonagensController : ControllerBase
     {
         private readonly DataContext _context;
@@ -103,5 +103,7 @@ namespace RpgApi.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+        
     }
 }
