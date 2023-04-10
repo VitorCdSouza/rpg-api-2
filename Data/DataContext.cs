@@ -12,6 +12,7 @@ namespace RpgApi.Data
         }
         public DbSet<Personagem> Personagens { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Arma> Armas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,8 +37,18 @@ namespace RpgApi.Data
             user.PasswordHash = null;
             user.PasswordSalt = null;
             user.Foto = null;
-
             modelBuilder.Entity<Usuario>().HasData(user);
+
+            modelBuilder.Entity<Arma>().HasData
+            (
+                new Arma() { Id = 1, Nome = "AK-47", Dano = 12},
+                new Arma() { Id = 2, Nome = "Minishark", Dano = 10},
+                new Arma() { Id = 3, Nome = "Varinha de gelo", Dano = 20},
+                new Arma() { Id = 4, Nome = "Uzi", Dano = 11},
+                new Arma() { Id = 5, Nome = "Espada Encantada", Dano = 25},
+                new Arma() { Id = 6, Nome = "Espada de Fogo", Dano = 23},
+                new Arma() { Id = 7, Nome = "Espada de Gelo", Dano = 23}
+            );
         }
     }
 }
